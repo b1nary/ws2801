@@ -9,38 +9,38 @@ module WS2801
 	@@strip = []
 	@@device = "/dev/spidev0.0"
 
-  # Set/read length of strip
-  #
-  # Example:
-  #   >> WS2801.length(25)
-  #   >> WS2801.length
-  #   => 25
-  #
-  # Arguments (or nil):
-  #   count: (Integer)
+	# Set/read length of strip
+	#
+	# Example:
+	#	 >> WS2801.length(25)
+	#	 >> WS2801.length
+	#	 => 25
+	#
+	# Arguments (or nil):
+	#	 count: (Integer)
 	def self.length len = nil
 		return @@len if len.nil?
 		@@len = len
 	end
 
-  # Set/read device
-  #
-  # Example:
-  #   >> WS2801.device("/dev/spidev0.0")
-  #   >> WS2801.device
-  #   => "/dev/spidev0.0"
-  #
-  # Arguments (or nil):
-  #   device: (String)
+	# Set/read device
+	#
+	# Example:
+	#	 >> WS2801.device("/dev/spidev0.0")
+	#	 >> WS2801.device
+	#	 => "/dev/spidev0.0"
+	#
+	# Arguments (or nil):
+	#	 device: (String)
 	def self.device dev = nil
 		return @@device if dev.nil?
 		@@device = dev
 	end
 
-  # Generate empty strip array
-  #
-  # Example:
-  #   >> WS2801.gen
+	# Generate empty strip array
+	#
+	# Example:
+	#	 >> WS2801.gen
 	def self.gen
 		@@strip = Array.new(@@len*3+1)
 	end
@@ -48,16 +48,16 @@ module WS2801
 	# Return current Strip
 	#
 	# Example;
-	#   >> WS2801.strip
+	#	 >> WS2801.strip
 	def self.strip
 		return @@strip
 	end
 
-  # Write stripinfo to device (if not empty)
-  # this needs root rights
+	# Write stripinfo to device (if not empty)
+	# this needs root rights
 	#
-  # Example:
-  #   >> WS2801.write
+	# Example:
+	#	 >> WS2801.write
 	def self.write
 		return false if @@strip.nil?
 	
@@ -73,13 +73,13 @@ module WS2801
 	# Put pixel X to
 	#
 	# Example:
-	#   >> WS2801.put 3, 120, 255, 120
+	#	 >> WS2801.put 3, 120, 255, 120
 	#
 	# Arguments:
-	#   pixel (Integer)
-	#   red (Integer)
-	#   green (Integer)
-	#   blue (Integer)
+	#	 pixel (Integer)
+	#	 red (Integer)
+	#	 green (Integer)
+	#	 blue (Integer)
 	def self.put pixel, red, green, blue
 		return false if @@strip.nil?
 		@@strip[(pixel*3)] = red
@@ -90,15 +90,16 @@ module WS2801
 	# Fill all pixel
 	#
 	# Example:
-	#   >> WS2801.fill 120, 255, 120
+	#	 >> WS2801.fill 120, 255, 120
 	#
 	# Arguments:
-	#   red (Integer)
-	#   green (Integer)
-	#   blue (Integer)
+	#	 red (Integer)
+	#	 green (Integer)
+	#	 blue (Integer)
 	def self.fill red, green, blue
+		self.gen if @@strip.length == 0
 		((@@strip.size-1)/3).times do |i|
-			@@strip[(i*3)]   = red
+			@@strip[(i*3)]	 = red
 			@@strip[(i*3)+1] = green
 			@@strip[(i*3)+2] = blue
 		end
@@ -107,7 +108,7 @@ module WS2801
 	# Reset pixel to black
 	#
 	# Example:
-	#   >> WS2801.reset
+	#	 >> WS2801.reset
 	def self.reset
 		self.gen
 		self.write

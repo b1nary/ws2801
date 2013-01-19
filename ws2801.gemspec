@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "ws2801"
-  s.version = "0.2.1"
+  s.version = "1.0"
   s.date = "2013-01-12"
   s.summary = "Controlling ws2801 chip from Ruby on Raspberry PI or similar (RGB LED Stripes/Pixel)"
   s.description = "Controlling ws2801 chip from Ruby on Raspberry PI or similar (RGB LED Stripes/Pixel)"

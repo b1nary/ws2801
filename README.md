@@ -32,6 +32,10 @@ Set first pixel to blue
 
     WS2801.set :pixel => 0, :b => 255
 
+Set some pixel to red
+
+    WS2801.fade :pixel => [1,4,7,12,18], :r => 255
+
 Set off
 
     WS2801.off

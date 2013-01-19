@@ -1,7 +1,7 @@
 #
 # Controller for: RGB Pixel with WS2801 Chip
 # build for Diffused Digital RGB LED Pixels from Adafruits on Raspberry Pi
-# (c) 2013 Roman Pramberger (roman.pramberger@gmail.com)
+# (c) 2013 Roman Pramberger (roman@pramberger.ch)
 
 # WS2801 driver
 module WS2801
@@ -89,20 +89,20 @@ module WS2801
 	# Set pixel to color
 	#
 	# Example:
-	#  >> WS2801.set { :r => 255, :list => [1..10] }
-	#  >> WS2801.set { :g => 128, :list => :all }
-	#  >> WS2801.set { :r => 40, :g => 255, :b => 200, :list => 4 }
+	#  >> WS2801.set { :r => 255, :pixel => [1..10] }
+	#  >> WS2801.set { :g => 128, :pixel => :all }
+	#  >> WS2801.set { :r => 40, :g => 255, :b => 200, :pixel => 4 }
 	#
 	# Options:
-	#  :list => []      # color in pixels in list
+	#  :pixel => []      # color in pixels in list
 	#	 :r => (Integer)
 	#	 :g => (Integer)
 	#	 :b => (Integer)
 	def self.set options = {}
 		self.generate if @@options[:strip].length == 0
-		options[:list] = (0..(self.length-1)).to_a if options[:list].nil? or options[:list] == :all
-		options[:list] = [options[:list]] if options[:list].is_a? Numeric
-		options[:list].each do |i|
+		options[:pixel] = (0..(self.length-1)).to_a if options[:pixel].nil? or options[:pixel] == :all
+		options[:pixel] = [options[:pixel]] if options[:pixel].is_a? Numeric
+		options[:pixel].each do |i|
 			@@options[:strip][(i*3)]	 = options[:r] || 0
 			@@options[:strip][(i*3)+1] = options[:g] || 0
 			@@options[:strip][(i*3)+2] = options[:b] || 0

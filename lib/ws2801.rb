@@ -1,3 +1,4 @@
+
 #
 # Controller for: RGB Pixel with WS2801 Chip
 # build for Diffused Digital RGB LED Pixels from Adafruits on Raspberry Pi
@@ -136,14 +137,25 @@ module WS2801
 		breakme = 0
 		while true
 			options[:pixel].each do |i|
-				next if @@options[:strip][(i*3+2)] == options[:b] and @@options[:strip][(i*3+1)] == options[:g] and @@options[:strip][(i*3)] == options[:r]
-				@@options[:strip][(i*3)]   -= 1 if @@options[:strip][(i*3)]   > options[:r]
-				@@options[:strip][(i*3)]   += 1 if @@options[:strip][(i*3)]   < options[:r]
-				@@options[:strip][(i*3+1)] -= 1 if @@options[:strip][(i*3+1)] > options[:g]
-				@@options[:strip][(i*3+1)] += 1 if @@options[:strip][(i*3+1)] < options[:g]
-				@@options[:strip][(i*3+2)] -= 1 if @@options[:strip][(i*3+2)] > options[:b]
-				@@options[:strip][(i*3+2)] += 1 if @@options[:strip][(i*3+2)] < options[:b]
-				breakme += 1 if @@options[:strip][(i*3+2)] == options[:b] and @@options[:strip][(i*3+1)] == options[:g] and @@options[:strip][(i*3)] == options[:r]
+				#next if @@options[:strip][(i*3+2)] == options[:b] and @@options[:strip][(i*3+1)] == options[:g] and @@options[:strip][(i*3)] == options[:r]
+				if @@options[:strip][(i*3)]   > options[:r]
+					@@options[:strip][(i*3)]   -= 1
+				elsif @@options[:strip][(i*3)]   < options[:r]
+					@@options[:strip][(i*3)]   += 1
+				end
+				if @@options[:strip][(i*3+1)] > options[:g]
+					@@options[:strip][(i*3+1)] -= 1 
+				elsif @@options[:strip][(i*3+1)] < options[:g]
+					@@options[:strip][(i*3+1)] += 1
+				end 
+				if @@options[:strip][(i*3+2)] > options[:b]
+					@@options[:strip][(i*3+2)] -= 1
+				elsif @@options[:strip][(i*3+2)] < options[:b]
+					@@options[:strip][(i*3+2)] -= 1
+				end
+				(breakme += 1; break) if @@options[:strip][(i*3+2)] == options[:b] and @@options[:strip][(i*3+1)] == options[:g] and 
+@@options[:strip][(i*3)] == 
+options[:r]
 			end
 			self.write if @@options[:autowrite]
 			break if breakme >= @@options[:len]
@@ -152,6 +164,17 @@ module WS2801
 		end
 	end
 
+	# Get Pixel
+	#
+	# Example:
+	#  >> WS2801.get 1
+	#  => [255,0,0]
+	#
+	# Arguments:
+	#  pixel - Pixel id
+	def self.get pixel
+		[@@options[:strip][pixel*3], @@options[:strip][pixel*3+1], @@options[:strip][pixel*3+2]]
+	end
 
 	# Set off
 	#

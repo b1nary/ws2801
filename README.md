@@ -1,7 +1,7 @@
 ws2801 gem
 ======
 
-Controlling ws2801 chip from Ruby on Raspberry PI or similar (RGB LED Stripes/Pixel)
+Controlling LED Stripes/Pixel with ws2801 chips from Ruby on Raspberry PI or similar
 
 ---
 
@@ -32,7 +32,7 @@ Set first pixel to blue
 
     WS2801.set :pixel => 0, :b => 255
 
-Set some pixel to red
+Fade some pixel to red
 
     WS2801.fade :pixel => [1,4,7,12,18], :r => 255
 

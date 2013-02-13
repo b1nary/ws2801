@@ -49,3 +49,13 @@ Change length (default: 25)
     WS2801.length 50
 
 [**Full Documentation**](http://rubydoc.info/github/b1nary/ws2801/master/WS2801)
+
+---
+
+# Changelog
+
+* 1.1.0 Include WS2801::Effects, fix fading
+* 1.0.2 Include fading
+* 1.0 Calling Stable
+* 0.2 Refactoring
+* 0.1.2 Release

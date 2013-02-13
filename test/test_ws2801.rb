@@ -30,8 +30,4 @@ class WS2801_Test < Test::Unit::TestCase
 		WS2801.write
 	end
 
-	def test_reset
-		WS2801.reset
-	end
-
 end

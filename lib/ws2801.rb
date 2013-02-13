@@ -1,4 +1,3 @@
-
 #
 # Controller for: RGB Pixel with WS2801 Chip
 # build for Diffused Digital RGB LED Pixels from Adafruits on Raspberry Pi
@@ -102,15 +101,15 @@ module WS2801
 	#	 :g => (Integer)
 	#	 :b => (Integer)
 	def self.set options = {}
-		self.generate if @@options[:strip].length == 0
-		options[:pixel] = (0..(self.length-1)).to_a if options[:pixel].nil? or options[:pixel] == :all
+		WS2801.generate if @@options[:strip].length == 0
+		options[:pixel] = (0..(WS2801.length-1)).to_a if options[:pixel].nil? or options[:pixel] == :all
 		options[:pixel] = [options[:pixel]] if options[:pixel].is_a? Numeric
 		options[:pixel].each do |i|
-			@@options[:strip][(i*3)]	 = options[:r] || 0
+			@@options[:strip][(i*3)]   = options[:r] || 0
 			@@options[:strip][(i*3)+1] = options[:g] || 0
 			@@options[:strip][(i*3)+2] = options[:b] || 0
 		end
-		self.write if @@options[:autowrite]
+		WS2801.write if @@options[:autowrite]
 	end
 
 	# Fade pixel to color
@@ -127,14 +126,13 @@ module WS2801
 	#	 :g => (Integer)
 	#	 :b => (Integer)
 	def self.fade options = {}
-		self.generate if @@options[:strip].length == 0
-		options[:pixel] = (0..(self.length-1)).to_a if options[:pixel].nil? or options[:pixel] == :all
+		WS2801.generate if @@options[:strip].length == 0
+		options[:pixel] = (0..(WS2801.length-1)).to_a if options[:pixel].nil? or options[:pixel] == :all
 		options[:pixel] = [options[:pixel]] if options[:pixel].is_a? Numeric
 		options[:r] = 0 if options[:r].nil?
 		options[:g] = 0 if options[:g].nil?
 		options[:b] = 0 if options[:b].nil?
 
-		breakme = 0
 		while true
 			options[:pixel].each do |i|
 				#next if @@options[:strip][(i*3+2)] == options[:b] and @@options[:strip][(i*3+1)] == options[:g] and @@options[:strip][(i*3)] == options[:r]
@@ -153,12 +151,12 @@ module WS2801
 				elsif @@options[:strip][(i*3+2)] < options[:b]
 					@@options[:strip][(i*3+2)] -= 1
 				end
-				(breakme += 1; break) if @@options[:strip][(i*3+2)] == options[:b] and @@options[:strip][(i*3+1)] == options[:g] and 
+			end
+			(breakme = true; break) if @@options[:strip][(i*3+2)] == options[:b] and @@options[:strip][(i*3+1)] == options[:g] and 
 @@options[:strip][(i*3)] == 
 options[:r]
-			end
-			self.write if @@options[:autowrite]
-			break if breakme >= @@options[:len]
+			WS2801.write if @@options[:autowrite]
+			break if breakme
 
 			sleep(options[:timeout] || 0.01)
 		end
@@ -181,7 +179,7 @@ options[:r]
 	# Example:
 	#	 >> WS2801.off
 	def self.off
-		self.generate
-		self.write if @@options[:autowrite]
+		WS2801.generate
+		WS2801.write if @@options[:autowrite]
 	end
 end
